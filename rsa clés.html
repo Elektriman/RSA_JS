@@ -1,0 +1,125 @@
+<script>
+	function mod(n, N){
+		while (n>N-1 || n<0){
+			if (n>N-1){
+				n = n-N ;
+			} else {
+				n = n+N ;
+			}
+		}
+	return n ;
+	}
+	function P(n){
+		var b = 1 ;
+		var dv = 0 ;
+		var loop = true ;
+		while(b <= n && loop == true){
+			var c = mod(n, b) ;
+			if(c == 0){
+				dv = dv + 1 ;
+			}
+			b = b + 1 ;
+		}
+		if (dv == 2) {
+			Pr = 1 ;
+			loop = false ;
+		} else {
+			Pr = 0 ;
+		}
+		return Pr ;
+	}
+
+	var n = prompt("n");
+	var calc = true ;
+	
+	//cette partie du code analyse le nombre n entré pour vérifier s'il est possible de créer une clé avec
+	if(n>20000 || P(n)==1 || n<0){
+		alert("ce chiffre n'est pas valide car il est premier ou n'est pas compris entre 0 et 20000 exclus");
+		calc = false ;
+	}
+
+	if(calc == true){
+		//cette partie du code calcule m, p et q en fonction de n
+		var p = 0 ;
+		var q = 0 ;
+		var e = 0 ;
+		var I = 2 ;
+		var LOOP = true ;
+		while(I<n && LOOP==true){
+			//alert("1");
+			if(mod(n, I) == 0){
+				var b = 1 ;
+				var dv = 0 ;
+				var loop = true ;
+				while(b <= I && loop == true){
+					//alert("2");
+					var c = mod(I, b) ;
+					if(c == 0){
+						dv = dv + 1 ;
+					}
+					b = b + 1 ;
+				}
+				if (dv == 2) {
+					p = I ;
+					LOOP = false ;
+					loop = false ;
+				}
+			}
+			I= I+1 ;
+		}
+		q = n/p ;
+		var m = (p-1)*(q-1);
+		
+		//cette partie du code calcule e en fonction des valeurs calculées précédemment
+		var dv = [] ;
+		var y = 0 ;
+		var Boucle = true ;
+		for(var i=1; i<m; i++){
+			//alert("3");
+			var z = 0 ;
+			while (z <= i) {
+				//alert("4");
+				if (i%z == 0){
+					dv[y] = i ;
+					y = y+1 ;
+				}
+				var z = z + 1 ;
+			}
+			var I=0;
+			while(I<dv.length && Boucle==true){
+				//alert("5");
+				if(m%dv[I] != 0 && dv[I]!=1){
+					e = dv[I] ;
+					Boucle = false ;
+				}
+				I = I+1 ;
+			}
+		}
+
+		//cette partie du code calcule d en fonction des valeurs calculées précédemment
+		var d = 0 ;
+		var boucle = true ;
+		var i = 1;
+		while(i<m-1 && boucle == true){
+			i = i+1 ;
+			a = 0 ;
+			A = 0 ;
+			for(var I=0; I<=i; I++){
+				//alert("7");
+				A = (e*I)-1
+				a = mod(A, m)
+			}
+			if(a==0){
+				d = i ;
+				boucle = false;
+			}
+		}
+
+
+		//
+		document.write(p+" "+q+" "+n+" "+m+" "+e+" "+d+"</br >");
+		document.write("votre cle publique est "+n+";"+e+"</br >");
+		document.write("votre cle privee est "+n+";"+d);
+	}
+	
+</script>
